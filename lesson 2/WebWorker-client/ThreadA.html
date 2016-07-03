@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+		<h2>Thread A</h2>
+		counter: <b id="res"></b>
+		<button onclick="startWorker()">Start Counting</button>
+		<button onclick="stopWorker()">stop Counting</button>
+		<script>
+			var wrk;
+			function startWorker(){
+				if(typeof Worker ==='undefined'){
+					throw new Error('Browser not support Workers');
+				}
+				wrk = new Worker('worker.js');
+				wrk.onmessage = function(msg){
+					document.getElementById('res').innerHTML= msg.data;
+				}
+			}
+			
+			function stopWorker(){
+				wrk.terminate();
+			}
+		</script>
+	</body>
+</html>

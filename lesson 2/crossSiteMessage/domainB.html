@@ -1,0 +1,8 @@
+<h2>I am domain B!!!!</h2>
+<div id="msg"></div>
+<script>
+	//on message recieved
+	window.onmessage = function(e){
+		 document.getElementById('msg').innerHTML=e.data+"<br/>origin:"+e.origin;
+	}
+</script>

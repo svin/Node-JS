@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+		<h2>Domain A</h2>
+		<iframe id="iframe1" src="http://domainb.com/domainB.html"></iframe>
+		<input id="txt"><button onclick="send()">send</button>
+		<script>
+			var iframe1 = document.getElementById('iframe1').contentWindow;
+			function send(){
+				var txt = document.getElementById('txt').value;
+				iframe1.postMessage(txt,"http://domainb.com");
+			}
+		</script>
+	</body>
+</html>
