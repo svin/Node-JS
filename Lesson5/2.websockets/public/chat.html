@@ -1,24 +1,56 @@
-<script>
-    //browser not supported
-    if (!window.WebSocket) {
-        //take care of message the user
-    }
-    var conn = new WebSocket('ws://127.0.0.1:1337');
-    //var conn = new WebSocket('ws://echo.websocket.org');
-    //server response
-    conn.onmessage = function(message) {
-        console.log('onmessage');
-        console.log(message);
-    };
-    //connectivity issue
-    conn.onerror = function(err) {
-        console.log(err);
-    };
-    conn.onopen = function() {
-        console.log('onopen');
-        conn.send("This is client, how are you?")
-    };
-    conn.onclose = function(err) {
-        console.log('onclose');
-    }
-</script>
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.0.0.min.js" integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    </head>
+    <body>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Chat</h3>
+            </div>
+            <div class="panel-body" id="chat"></div>
+        </div>
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="type message" id="chatTxt">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" id="sendBtn">Send!</button>
+            </span>
+        </div>
+        <!-- /input-group -->
+        <script>
+            //browser not supported
+            if (!window.WebSocket) {
+                //take care of message the user
+            }
+            var conn = new WebSocket('ws://fulls_ins:1337');
+            $('#sendBtn').click(function(){
+              //get the data
+              var txt = $('#chatTxt').val();
+              //send to server
+              conn.send(txt);
+              //empty the input
+              $('#chatTxt').val('');
+            });
+            //var conn = new WebSocket('ws://echo.websocket.org'); server response
+            conn.onmessage = function(message) {
+                console.log('onmessage');
+                $('#chat').append(message.data+'<br/>');
+            }
+            //connectivity issue
+            conn.onerror = function(err) {
+                console.log(err);
+            }
+            conn.onopen = function() {
+                console.log('onopen');
+
+            }
+            conn.onclose = function(err) {
+                console.log('onclose');
+            }
+        </script>
+    </body>
+</html>

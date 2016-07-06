@@ -1,0 +1,12 @@
+Create a chat client and server:
+
+Client:
+ - first will ask the user for his name and will use it from this time on
+ - the chat window will be scrolled
+ - the text input will send the text on ENTER (Google it)
+
+Server:
+ - the chat server will assign color to each user
+ - the chat server will assign date to each message
+ - the chat server will hold the all chat history, and when the user will connect he will get the all history
+   (since the server is up)

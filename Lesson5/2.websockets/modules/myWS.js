@@ -1,4 +1,6 @@
 var http = require('http');
+var htmlencode = require('htmlencode');
+
 
 //configure empty http server
 var httpServer = http.createServer(function(rq, rs) {});
@@ -20,9 +22,14 @@ ws.on('request', function(req) {
     clients.push(connection);
     //send response
     connection.sendUTF("Conn established");
-
     //take care on clients messages
-    connection.on('message', function (msg) {
-        console.log(msg);
+    connection.on('message', function(msg) {
+        for (var i = 0; i < clients.length; i++) {
+            //get one of the clients connecion
+            var usercon = clients[i];
+            usercon.sendUTF(htmlencode.htmlEncode(msg.utf8Data));
+
+        }
     })
-});
+
+})
