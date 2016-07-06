@@ -1,0 +1,24 @@
+<script>
+    //browser not supported
+    if (!window.WebSocket) {
+        //take care of message the user
+    }
+    var conn = new WebSocket('ws://127.0.0.1:1337');
+    //var conn = new WebSocket('ws://echo.websocket.org');
+    //server response
+    conn.onmessage = function(message) {
+        console.log('onmessage');
+        console.log(message);
+    };
+    //connectivity issue
+    conn.onerror = function(err) {
+        console.log(err);
+    };
+    conn.onopen = function() {
+        console.log('onopen');
+        conn.send("This is client, how are you?")
+    };
+    conn.onclose = function(err) {
+        console.log('onclose');
+    }
+</script>
