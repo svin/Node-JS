@@ -1,0 +1,34 @@
+Make a chat App.
+
+- Note: please make use of available materials we already done.
+		for client you may user the registration and login we wrote.
+		for server you may user last lesson server.
+		
+1. create a registration page:
+	a. first
+	b. last
+	c. email
+	d. password
+	e. nickname (for chat)
+	
+2. create a login page
+	a. email
+	b. password.
+
+3. after login redirect the user to the chat screen.
+	the chat server will be built over WebSocket.
+	chat server should be based on the last lesson server.
+	- every chat message will contain the next JSON 
+		{
+			txt: "chat text",
+			color: "#[color rgb]", //will be selected randommaly per user uppon user login
+			user: "[user name]", //will be take from the session, upon login store the nickname into session,
+			date: [unixTimeStamp] // quickie: +new Date()
+		}
+	- the client will parse the json and will show the new chat line.
+	- the server should keep all the chat messages in an array of objects, every time user logged in into the chaty the server will send all the previous messages to him.
+		(Note: the chat messages will be stored in memory, when the server would be restarted, the data will disappeared)
+		
+		
+	
+

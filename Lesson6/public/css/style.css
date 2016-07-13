@@ -1,0 +1,22 @@
+#livechat-compact-container,
+#livechat-full {
+    position: relative;
+    left: 20px!important;
+    right: auto!important;
+    height: 350px !important;
+}
+
+#livechat-eye-catcher {
+    left: 20px !important;
+    width: 250px !important;
+}
+
+.submit input {
+    background-color: #6363CF !important;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+.icon-minimize, .icon-close, #open-icon {
+    color: #F00;
+}
