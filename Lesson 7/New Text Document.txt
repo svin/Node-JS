@@ -1,0 +1,7 @@
+var express = require('express');
+//run the factory
+var app = express();
+var bodyParser = require('body-parser');
+
+//expose the static content folder
+app.use(express.static('public'));

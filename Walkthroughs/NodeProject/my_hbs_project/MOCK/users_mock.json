@@ -1,0 +1,28 @@
+{
+  "users": [{
+      "id": 1,
+      "first_name": "Denise",
+      "last_name": "Hamilton",
+      "email": "dhamilton0@nytimes.com"
+    }, {
+      "id": 2,
+      "first_name": "Martha",
+      "last_name": "Walker",
+      "email": "mwalker1@vimeo.com"
+    }, {
+      "id": 3,
+      "first_name": "Gerald",
+      "last_name": "Lopez",
+      "email": "glopez2@google.com.au"
+    }, {
+      "id": 4,
+      "first_name": "Emily",
+      "last_name": "Gonzalez",
+      "email": "egonzalez3@psu.edu"
+    }, {
+      "id": 5,
+      "first_name": "Harry",
+      "last_name": "Matthews",
+      "email": "hmatthews4@vimeo.com"
+    }]
+}
