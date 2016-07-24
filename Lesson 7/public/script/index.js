@@ -14,6 +14,20 @@ $(document).ready(function() {
         e.preventDefault();
     });
 
+    $('#emailreg').change(function() {
+        var that = this;
+        var email = this.value;
+        //user haven't provided an email
+        if (!email) {
+            return;
+        }
+        jsonAjax('auth/checkEmail/' + email, 'GET', null, function(res) {
+            if (res.exists) {
+                $(that).addClass('error');
+                alert('Email exists');
+            }
+        });
+    });
 
     $('#register-submit').click(function(e) {
         //TODO: validate the form
@@ -34,7 +48,7 @@ $(document).ready(function() {
         jsonAjax("/auth/login", "POST", jsonObj, function(res) {
             if (res.success) {
                 //login is success redirect to chat
-                location.href="/chat.html";
+                location.href = "/chat/chat.html";
             } else {
                 //TODO: add login failed message
                 alert('no good!');
@@ -63,7 +77,7 @@ function jsonAjax(url, method, jsonObj, successCB) {
     $.ajax({
         type: method,
         url: url,
-        data: JSON.stringify(jsonObj),
+        data: jsonObj ? JSON.stringify(jsonObj) : null,
         contentType: "application/json; charset=UTF-8",
         datatype: "json",
         success: successCB,

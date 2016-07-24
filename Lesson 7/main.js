@@ -1,9 +1,12 @@
+//get current folder as root
+global.BASE_PATH = __dirname;
+
 var express = require('express');
 //run the factory
 var app = express();
 var bodyParser = require('body-parser');
-//get connection
-var con = require('./modules/db.js');
+//get connection, set into global so all the controllers would be able to use it
+GLOBAL.con = require('./modules/db.js');
 var session = require('express-session');
 
 // expose the static content folder
@@ -18,53 +21,14 @@ app.use(session({
     saveUninitialized: false //do not save session on Uninitialized
 }));
 
-app.post('/auth/register', function(req, res) {
-    res.type('application/json; charset=UTF-8');
-    // req.body is a JSON object that will be populated into the insert
-    con.query("INSERT INTO users SET ?", req.body, function(err, result) {
-        // should be translated to:
-        // INSERT INTO users SET name="demo",email="demo@domain.com",password="1234"
-        if (err) {
-            throw err;
-        }
-        res.send(JSON.stringify({
-            id: result.insertId
-        }));
-    });
-});
+//any url that starts with '/auth' should been managed by this controller
+// for example: '/auth/login','/auth/register'
+var auth = require('./modules/controllers/auth');
+app.use('/auth', auth);
 
-app.post('/auth/check', function(req, res) {
-    res.type('application/json; charset=UTF-8');
-    res.send(JSON.stringify({
-        success: typeof req.session.userData === 'Object'
-    }));
-});
+//this controller handle chat
+app.use('/chat', require('./modules/controllers/chat'));
 
-
-app.post('/auth/login', function(req, res) {
-    res.type('application/json; charset=UTF-8');
-    //for convenient
-    var data = req.body;
-    con.query("SELECT * FROM users WHERE email=? AND pass=?", [data.email, data.pass], function(err, result) {
-        // should be translated to:
-        // INSERT INTO users SET name="demo",email="demo@domain.com",password="1234"
-        if (err) {
-            throw err;
-        }
-        var answer = false;
-        //record had returned - so user is logged in
-        if (result.length > 0) {
-            answer = true;
-            //create the property userData in the session and store the user object into it
-            req.session.userData = result[0]; //get the first user record
-        } else { // login failed
-            answer = false;
-        }
-        res.send(JSON.stringify({
-            success: answer
-        }));
-    });
-});
 
 //start listening to network
 var server = app.listen(8080, function() {

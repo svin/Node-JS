@@ -8,6 +8,12 @@ var _con = mysqlModule.createConnection({
     password: '',
     database: 'company'
 });
+// take care on general errors
+_con.on('error',function(err){
+    console.error('Fatal mysql occured');
+    console.log(err);
+});
+
 //actual connect
 _con.connect();
 //expose mysql
