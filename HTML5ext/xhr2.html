@@ -1,0 +1,15 @@
+<script>
+	function upload(file){
+		var formData = new FormData();
+		formData.append('fileName',file);
+		
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST',fileUploadUrl,true);
+		xhr.onload=function(e){
+			alert('file uploaded'+JSON.encode(e));
+		}
+		xhr.send(formData);
+	
+	}
+</script>
+<input type="file" onchange="upload(this)">

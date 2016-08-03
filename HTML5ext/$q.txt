@@ -1,0 +1,51 @@
+function A("a1",
+	function("b1",
+		function("c1",function(){
+			}){
+		}){
+	}){
+}
+
+a("a1").then(function(){
+})
+.then(function(){})
+.then(function(){})
+
+//old code...
+$http('/users').then(function(res){
+})
+$http('/products').then(function(res){
+})
+$http('/orders').then(function(res){
+})
+//with $q
+var usersPromise = $http('/users');
+var productsPromise = $http('/products');
+var ordersPromise = $http('/orders');
+//run when all the Promises ended
+$q.all([usersPromise,productsPromise,ordersPromise]).then(fucntion(){
+
+});
+
+//demo for creating promise
+function A($q){
+	//this is the promise object
+	var defer = $q.defer();
+		setTimeout(function(){
+			defer.resolve("finished");
+		},1000);
+		setTimeout(function(){
+			defer.reject("failed");
+		},999);
+	//the promise itself
+	return defer.promise;
+	
+}
+
+A().then(function(){
+	console.log("success");
+},function(){
+	console.log("failed");
+});
+
+

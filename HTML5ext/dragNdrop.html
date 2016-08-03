@@ -1,0 +1,45 @@
+<html>
+	<head>
+		<style>
+			#dropable1{
+				width: 200px;
+				height: 200px;
+				border: red dashed 5px;
+			}
+			#draggable1{
+				background: green;
+				display: inline-block;
+				cursor: move;
+			}
+		</style>
+		<script>
+			function drag(event){
+				//$(event.srcElement).hide();
+				event.srcElement.style.opacity=0.3;
+			}
+			
+			function dragOver(event){
+				//remove the browser deafult behaviour
+				//let the user drag
+				event.preventDefault();
+				console.log("dragged over");
+			}
+			
+			function drop(event){
+				//remove the browser deafult behaviour
+				//let the user drag
+				//event.preventDefault();
+				var span = document.getElementById('draggable1');
+				//return to normal 
+				span.style.opacity=1;
+				event.target.appendChild(span);
+				alert("item droped");
+			}
+				
+		</script>
+	</head>
+	<body>
+		<div id="dropable1" ondrop="drop(event)" ondragover="dragOver(event)"></div>
+		<span id="draggable1" draggable="true" ondragstart="drag(event)">Drag ME!!!</span>
+	</body>
+</html>

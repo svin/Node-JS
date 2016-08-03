@@ -22,7 +22,7 @@
                         chat screen</div>
                     <div class="form-group">
                         <label class="control-label" for="inputWarning1">send your text</label>
-                        <input type="text" class="form-control" id="inputWarning1">
+                        <input type="text" class="form-control" id="chatText">
                     </div>
                 </div>
             </div>
@@ -31,11 +31,12 @@
         <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
         <script>
+
             if (!window.WebSocket) {
                 $('#chatScrn').text('browser not supported');
             } else {
                 //open web socket
-                var ws = new WebSocket('ws://localhost:8080/chat/ws');
+                var ws = new WebSocket('ws://localhost:1337');
                 //on error, show error to the screen (debug mode)
                 ws.onerror = function(err) {
                     $('#chatScrn').append('<pre>' + JSON.stringify(err, null, 4) + '</pre>')
@@ -44,9 +45,27 @@
                 ws.onopen = function() {}
                 //when message arrived
                 ws.onmessage = function(msg) {
-                    $('#chatScrn').append('<pre>' + msg.data +'</pre>');
+                    var obj;
+                    try {
+                        obj = JSON.parse(msg.data);
+                        $('#chatScrn').append('<div>' + obj.text + '</div>')
+                        $('#chatScrn div').last().css('color', '#' + obj.color);
+                    } catch (e) {
+                        console.log('Failed to parse response');
+                        $('#chatScrn').append('<pre>' + msg.data + '</pre>');
+                    }
                 }
-
+                $(document).ready(function() {
+                    $('#chatText').keyup(function(e) {
+                        e.preventDefault();
+                        //if the user had clicked on enter
+                        if (e.keyCode == 13/*Enter*/ && this.value/*the user entered any value already*/) {
+                            ws.send(this.value);
+                            //clear the text
+                            this.value = '';
+                        }
+                    });
+                });
             }
         </script>
     </body>

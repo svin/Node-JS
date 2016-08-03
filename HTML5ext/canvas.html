@@ -1,0 +1,51 @@
+<canvas id="can1" width="400" height="400">
+</canvas>
+
+<script>
+	var can1 = document.getElementById("can1");
+	var ctx = can1.getContext("2d");
+	ctx.fillStyle="#FF0000";
+	ctx.fillRect(10/*x pos*/,10/*y pos*/,50/*width*/,50/*height*/);
+	//move the pen from 0,0 tp 60,60
+	ctx.lineStyle="#FF0000";
+	ctx.moveTo(60,60);
+	ctx.lineTo(10,90);
+	ctx.stroke();//draw!!
+	
+	//set background
+	var img = new Image();
+	img.onload=function(){
+		var ptr = ctx.createPattern(img,"repeat");
+		ctx.rect(50,50,150,150);
+		ctx.fillStyle= ptr
+		ctx.fill();
+	};
+	img.src= "https://s-media-cache-ak0.pinimg.com/upload/504403295704699375_board_thumbnail_2016-07-06-23-29-52_72620_100.jpg";
+	
+	var lX=200,lY=200;//last X, last Y
+	function move(x,y){
+		lX+=(x*10);
+		lY+=(y*10);
+		ctx.lineTo(lX,lY);
+		ctx.stroke();//draw!!
+	}
+	
+	document.onkeydown=function(e){
+		var kId = e.keyCode;
+		switch(kId){
+			case 37:
+				move(-1,0);
+				break;
+			case 38:
+				move(0,-1);
+				break;
+			case 39:
+				move(1,0);
+				break;
+			case 40:
+				move(0,1);
+				break;
+			
+		}
+	}
+</script>
